@@ -35,7 +35,9 @@ gradtest(f, dims...) = gradtest(f, rand.(Float64, dims)...)
 @test gradtest((x) -> logabsdet(x)[1], (4, 4))
 
 @testset "indexing & slicing" begin
-  gradtest(x->view(x, 1:2, 1:2), rand(4, 4))
+  @test gradtest(x->view(x, 1:2, 1:2), rand(4, 4))
+  @test gradtest(x->getindex(x, 2, :, 3:4, [3,1]), rand(4, 4, 4, 4))
+  @test gradtest(x->getindex(x, 1, 2, 3, 4), rand(4, 4, 4, 4))
 end
 
 function promotiontest(f, A, B, C)

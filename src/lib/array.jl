@@ -102,9 +102,7 @@ Base.getindex(xs::TrackedArray, i...) = track(getindex, xs, i...)
 
 @grad function getindex(xs::AbstractArray, i...)
   data(xs)[i...], function (Δ)
-    Δ′ = zero(xs)
-    Δ′[i...] = data(Δ)
-    (nobacksies(:getindex, Δ′), map(_->nothing, i)...)
+  (nobacksies(:getindex, SparseGrad(data(Δ), i, size(data(xs)), data(xs))), map(_->nothing, i)...)
   end
 end
 
