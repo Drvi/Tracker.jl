@@ -47,7 +47,7 @@ struct SparseGrad{T,N,S,P,O} <: AbstractArray{T,N} where O <: AbstractArray{T,N}
     Δ::P
     i::S
     size::NTuple{N,Int}
-    function SparseGrad(Δ::P, i::S, size::NTuple{N,Int}, x::AbstractArray{T,N}) where {T,N,S,P<:Union{T,AbstractArray{T}}}
+    function SparseGrad(Δ::P, i::S, size::NTuple{N,Int}, x::AbstractArray{T,N}) where {T,N,S,P}
         new{T,N,S,P,typeof(x)}(Δ, i, Base.size(x))
     end
 end
